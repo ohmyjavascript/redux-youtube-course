@@ -2,13 +2,17 @@ import { legacy_createStore as createStore } from 'redux';
 import { combineReducers } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import productsReducer from './products';
+import { addLoggingOnDispatch } from '../add-ons/enhancers';
 
 const rootReducer = combineReducers({
   products: productsReducer,
 });
 
 // CREATE A STORE
-const store = createStore(rootReducer, composeWithDevTools());
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(addLoggingOnDispatch)
+);
 
 // EXPOSE IT OUTSIDE
 export default store;
