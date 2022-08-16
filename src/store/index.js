@@ -11,11 +11,17 @@ const rootReducer = combineReducers({
 
 const composedEnhancer = compose(addLoggingOnDispatch, addAppVersion);
 const middlewareEnhancer = applyMiddleware(blockActionMW, loggerMiddleware);
-
+const persistedStorageItems = localStorage.getItem('APP_PRODUCTS');
+let preLoadedState;
+if (persistedStorageItems) {
+  preLoadedState = {
+    products: JSON.parse(persistedStorageItems),
+  };
+}
 // CREATE A STORE
 const store = createStore(
   rootReducer,
-  undefined,
+  preLoadedState,
   composeWithDevTools(composedEnhancer, middlewareEnhancer)
 );
 
