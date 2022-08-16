@@ -1,16 +1,14 @@
-import { legacy_createStore as createStore, compose } from 'redux';
-import { combineReducers, applyMiddleware } from 'redux';
+import { legacy_createStore as createStore } from 'redux';
+import { combineReducers } from 'redux';
 import { composeWithDevTools } from '@redux-devtools/extension';
 import productsReducer from './products';
-import { addLoggingOnDispatch, addAppVersion } from '../add-ons/enhancers';
-import { blockActionMW, loggerMiddleware } from '../add-ons/middlewares';
+import favoritesReducer from './favorites';
 
 const rootReducer = combineReducers({
   products: productsReducer,
+  favorites: favoritesReducer,
 });
 
-// const composedEnhancer = compose(addLoggingOnDispatch, addAppVersion);
-// const middlewareEnhancer = applyMiddleware(blockActionMW, loggerMiddleware);
 const persistedStorageItems = localStorage.getItem('APP_PRODUCTS');
 let preLoadedState;
 if (persistedStorageItems) {
@@ -18,16 +16,7 @@ if (persistedStorageItems) {
     products: JSON.parse(persistedStorageItems),
   };
 }
-// CREATE A STORE
+
 const store = createStore(rootReducer, preLoadedState, composeWithDevTools());
 
-// const store = createStore(
-//   rootReducer,
-//   preLoadedState,
-//   composeWithDevTools(composedEnhancer, middlewareEnhancer)
-// );
-
-// console.log('MODIFIED WITH ENHANCER --> ', store.getState());
-
-// EXPOSE IT OUTSIDE
 export default store;

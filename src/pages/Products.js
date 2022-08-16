@@ -17,7 +17,10 @@ const Products = () => {
   }, [dispatch]);
 
   const addFavorite = (id) => {
-    console.log('Adding product to favorite', id);
+    dispatch({
+      type: 'favorites/ADD_FAVORITE',
+      payload: id,
+    });
   };
   const addToCart = (id) => {
     console.log('Adding product to cart', id);
