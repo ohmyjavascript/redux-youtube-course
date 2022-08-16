@@ -3,6 +3,9 @@ import { AiOutlineHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
 
 const ProductItem = ({ item, onFavorite, onCartAdd }) => {
+  React.useEffect(() => {
+    console.log('Render product Item ');
+  }, []);
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       {item.text}

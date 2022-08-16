@@ -9,8 +9,8 @@ const rootReducer = combineReducers({
   products: productsReducer,
 });
 
-const composedEnhancer = compose(addLoggingOnDispatch, addAppVersion);
-const middlewareEnhancer = applyMiddleware(blockActionMW, loggerMiddleware);
+// const composedEnhancer = compose(addLoggingOnDispatch, addAppVersion);
+// const middlewareEnhancer = applyMiddleware(blockActionMW, loggerMiddleware);
 const persistedStorageItems = localStorage.getItem('APP_PRODUCTS');
 let preLoadedState;
 if (persistedStorageItems) {
@@ -19,13 +19,15 @@ if (persistedStorageItems) {
   };
 }
 // CREATE A STORE
-const store = createStore(
-  rootReducer,
-  preLoadedState,
-  composeWithDevTools(composedEnhancer, middlewareEnhancer)
-);
+const store = createStore(rootReducer, preLoadedState, composeWithDevTools());
 
-console.log('MODIFIED WITH ENHANCER --> ', store.getState());
+// const store = createStore(
+//   rootReducer,
+//   preLoadedState,
+//   composeWithDevTools(composedEnhancer, middlewareEnhancer)
+// );
+
+// console.log('MODIFIED WITH ENHANCER --> ', store.getState());
 
 // EXPOSE IT OUTSIDE
 export default store;
