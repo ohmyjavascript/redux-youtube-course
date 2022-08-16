@@ -25,6 +25,9 @@ const Header = () => {
         <Link to="/cart" className="btn btn-default text-white navbar-btn">
           Cart
         </Link>
+        <Link to="/new" className="btn btn-default text-white navbar-btn">
+          New Product
+        </Link>
       </div>
     </div>
   );

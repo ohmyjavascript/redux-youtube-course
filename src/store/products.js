@@ -29,7 +29,16 @@ const PRODUCTS = [
 function productsReducer(state = INIT_STATE, action) {
   switch (action.type) {
     case 'products/LOAD_PRODUCTS':
-      return [...PRODUCTS];
+      return state.length === 0 ? [...PRODUCTS] : state;
+    case 'products/ADD_PRODUCT':
+      const newProduct = {
+        id: uuidv4(),
+        text: action.payload.name,
+        isFavorite: false,
+        category: action.payload.category,
+        price: action.payload.price,
+      };
+      return [...PRODUCTS, newProduct];
     default:
       return state;
   }
