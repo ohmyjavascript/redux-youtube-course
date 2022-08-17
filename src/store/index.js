@@ -9,14 +9,6 @@ const rootReducer = combineReducers({
   favorites: favoritesReducer,
 });
 
-const persistedStorageItems = localStorage.getItem('APP_PRODUCTS');
-let preLoadedState;
-if (persistedStorageItems) {
-  preLoadedState = {
-    products: JSON.parse(persistedStorageItems),
-  };
-}
-
-const store = createStore(rootReducer, preLoadedState, composeWithDevTools());
+const store = createStore(rootReducer, undefined, composeWithDevTools());
 
 export default store;

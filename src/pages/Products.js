@@ -1,13 +1,13 @@
 import React, { useEffect } from 'react';
 import ProductItem from '../components/ProductItem';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import { Link } from 'react-router-dom';
 
+const selectProdIds = (state) => state.products.map((prod) => prod.id);
+
 const Products = () => {
-  const products = useSelector((state) => state.products);
-  if (products.length) {
-    localStorage.setItem('APP_PRODUCTS', JSON.stringify(products));
-  }
+  const productIds = useSelector(selectProdIds, shallowEqual);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -16,17 +16,7 @@ const Products = () => {
     });
   }, [dispatch]);
 
-  const addFavorite = (id) => {
-    dispatch({
-      type: 'favorites/ADD_FAVORITE',
-      payload: id,
-    });
-  };
-  const addToCart = (id) => {
-    console.log('Adding product to cart', id);
-  };
-
-  if (products.length === 0) {
+  if (productIds.length === 0) {
     return (
       <div className="alert alert-dismissible alert-info">
         <strong>Alert! </strong> Please start adding products
@@ -39,13 +29,8 @@ const Products = () => {
   return (
     <div>
       <ul className="list-group">
-        {products.map((prod) => (
-          <ProductItem
-            key={prod.id}
-            item={prod}
-            onFavorite={addFavorite}
-            onCartAdd={addToCart}
-          />
+        {productIds.map((prodId) => (
+          <ProductItem key={prodId} id={prodId} />
         ))}
       </ul>
     </div>

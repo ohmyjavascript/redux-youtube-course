@@ -8,10 +8,14 @@ function productsReducer(state = INIT_STATE, action) {
       return state.length !== 0 ? state : [];
 
     case 'favorites/ADD_FAVORITE':
-      const toggledFavItem = state.find((prod) => prod.id === action.payload);
-      toggledFavItem.isFavorite = !toggledFavItem.isFavorite;
       return state.map((prodItem) => {
-        return prodItem.id === action.payload ? toggledFavItem : prodItem;
+        if (prodItem.id !== action.payload) {
+          return prodItem;
+        }
+        return {
+          ...prodItem,
+          isFavorite: !prodItem.isFavorite,
+        };
       });
 
     case 'products/ADD_PRODUCT':
