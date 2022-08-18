@@ -3,10 +3,15 @@ import ProductItem from '../components/ProductItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../store/products/actions';
-import { selectProductIds } from '../store/products/selectors';
+import {
+  selectProductIds,
+  selectProductIsLoading,
+} from '../store/products/selectors';
+import Spinner from '../components/Spinner';
 
 const Products = () => {
   const productIds = useSelector(selectProductIds);
+  const isLoading = useSelector(selectProductIsLoading);
 
   const dispatch = useDispatch();
 
@@ -15,6 +20,10 @@ const Products = () => {
       dispatch(fetchProducts);
     }
   }, [dispatch, productIds]);
+
+  if (isLoading) {
+    return <Spinner />;
+  }
 
   if (productIds.length === 0) {
     return (

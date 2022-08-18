@@ -18,8 +18,15 @@ const saveProductAction = (id, product) => {
   };
 };
 
+const loadProductsInit = () => {
+  return {
+    type: 'products/LOAD_PRODUCTS_INIT',
+  };
+};
+
 /******* Thunk Functions *****************/
 export async function fetchProducts(dispatch, getState) {
+  dispatch(loadProductsInit());
   const response = await axios.get('https://fakestoreapi.com/products');
   dispatch(loadProductAction(response.data));
 }
