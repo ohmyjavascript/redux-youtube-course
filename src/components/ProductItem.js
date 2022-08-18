@@ -1,17 +1,11 @@
 import React from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
-
-const selectProductById = (state, id) => {
-  return state.products.find((prod) => prod.id === id);
-};
+import { useSelector, useDispatch } from 'react-redux';
+import { selectProductById } from '../store/products/selectors';
 
 const ProductItem = ({ id }) => {
-  const product = useSelector(
-    (state) => selectProductById(state, id),
-    shallowEqual
-  );
+  const product = useSelector(selectProductById(id));
   const dispatch = useDispatch();
 
   const onFavorite = () => {

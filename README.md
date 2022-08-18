@@ -51,3 +51,10 @@ Actions dispatched twice within useEffect
 ### Patterns
 
 - Action creator pattern
+- Memoize selectors (array.map() always returns a new array reference)
+- useSelector hook will re-run its selector function after every dispatched action,
+- and if the selector result changes, it will force the component to re-render.
+- calling useSelector(selectTodoIds) will always cause the component to re-render after every action, because it's returning a new array reference!
+- we already saw shallowEqual
+- Memoization is a kind of caching - specifically, saving the results of an expensive calculation, and reusing those results if we see the same inputs later.
+- Memoization with reselect library

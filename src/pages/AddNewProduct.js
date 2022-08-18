@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { saveProducts } from '../store/products';
+import { saveProducts } from '../store/products/actions';
 
 const AddNewProduct = () => {
   const [title, setTitle] = useState('');
