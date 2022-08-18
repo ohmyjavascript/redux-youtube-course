@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { saveProducts } from '../store/products';
 
 const AddNewProduct = () => {
-  const [name, setName] = useState('');
+  const [title, setTitle] = useState('');
+  const [desc, setDesc] = useState('');
+  const [image, setImage] = useState('');
   const [category, setCategory] = useState('Mobile');
   const [price, setPrice] = useState(0);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch({
-      type: 'products/ADD_PRODUCT',
-      payload: {
-        name,
-        category,
-        price,
-      },
-    });
+    const product = {
+      title,
+      description: desc,
+      image,
+      category,
+      price,
+    };
+    dispatch(saveProducts(product));
     navigate('/');
   };
 
@@ -30,7 +34,25 @@ const AddNewProduct = () => {
           type="text"
           className="form-control"
           placeholder="Enter Product Name"
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="exampleInputEmail1"> Description </label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter Product Name"
+          onChange={(e) => setDesc(e.target.value)}
+        />
+      </div>
+      <div className="form-group">
+        <label htmlFor="exampleInputEmail1"> Image URL </label>
+        <input
+          type="text"
+          className="form-control"
+          placeholder="Enter Product Name"
+          onChange={(e) => setImage(e.target.value)}
         />
       </div>
       <div className="form-group">

@@ -12,6 +12,27 @@ export async function fetchProducts(dispatch, getState) {
   });
 }
 
+export function saveProducts(product) {
+  return async function saveNewProduct(dispatch, getState) {
+    product.rating = {
+      rate: 0,
+      count: 0,
+    };
+    const post = JSON.stringify(product);
+    const response = await axios.post(
+      'https://fakestoreapi.com/products',
+      post
+    );
+    dispatch({
+      type: 'products/ADD_PRODUCT',
+      payload: {
+        id: response.data.id,
+        ...product,
+      },
+    });
+  };
+}
+
 function productsReducer(state = INIT_STATE, action) {
   switch (action.type) {
     case 'products/LOAD_PRODUCTS':
@@ -30,14 +51,7 @@ function productsReducer(state = INIT_STATE, action) {
       });
 
     case 'products/ADD_PRODUCT':
-      const newProduct = {
-        id: uuidv4(),
-        text: action.payload.name,
-        isFavorite: false,
-        category: action.payload.category,
-        price: action.payload.price,
-      };
-      return [...state, newProduct];
+      return [...state, action.payload];
 
     default:
       return state;
