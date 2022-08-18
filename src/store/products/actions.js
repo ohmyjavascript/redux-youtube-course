@@ -35,6 +35,7 @@ export async function fetchProducts(dispatch, getState) {
   dispatch(loadProductAction(response.data));
 }
 
+// If you hover on the saveProducts, we see it returns a promise.
 export function saveProducts(product) {
   return async function saveNewProduct(dispatch, getState) {
     product.rating = {
