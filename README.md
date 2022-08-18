@@ -47,4 +47,7 @@ Actions dispatched twice within useEffect
 - Redux store doesn't know anything about async logic.
 - Any asynchronicity has to happen outside the store.
 - Redux reducers must never contain "side effects"
-- 
+  
+### Patterns
+
+- Action creator pattern

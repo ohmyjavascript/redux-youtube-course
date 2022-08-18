@@ -1,15 +1,29 @@
-import { v4 as uuidv4 } from 'uuid';
 import axios from 'axios';
 
 const INIT_STATE = [];
 
+// Action creators
+const loadProductAction = (products) => {
+  return {
+    type: 'products/LOAD_PRODUCTS',
+    payload: products,
+  };
+};
+
+const saveProductAction = (id, product) => {
+  return {
+    type: 'products/ADD_PRODUCT',
+    payload: {
+      id,
+      ...product,
+    },
+  };
+};
+
 // Thunk function
 export async function fetchProducts(dispatch, getState) {
   const response = await axios.get('https://fakestoreapi.com/products');
-  dispatch({
-    type: 'products/LOAD_PRODUCTS',
-    payload: response.data,
-  });
+  dispatch(loadProductAction(response.data));
 }
 
 export function saveProducts(product) {
@@ -23,13 +37,7 @@ export function saveProducts(product) {
       'https://fakestoreapi.com/products',
       post
     );
-    dispatch({
-      type: 'products/ADD_PRODUCT',
-      payload: {
-        id: response.data.id,
-        ...product,
-      },
-    });
+    dispatch(saveProductAction(response.data.id, product));
   };
 }
 
