@@ -42,3 +42,9 @@ Actions dispatched twice within useEffect
 - Do you want to cache the data (ie, use what's in state if it's already there instead of re-requesting it)?
 - Do you want to keep this data consistent while hot-reloading UI components (which may lose their internal state when swapped)?
 - Most form state probably shouldn't be kept in Redux.
+
+### Middlewares
+- Redux store doesn't know anything about async logic.
+- Any asynchronicity has to happen outside the store.
+- Redux reducers must never contain "side effects"
+- 

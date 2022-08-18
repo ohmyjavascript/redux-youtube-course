@@ -19,16 +19,29 @@
   Modify the action
   Pause the action or even stop it entirely 
 */
+import axios from 'axios';
 
-export const blockActionMW = (store) => (next) => (action) => {
-  console.log('Hit middleware');
-  if (action.type === 'products/BOXING_DAY_OFFERS') return;
-  else return next(action);
-};
+// export const blockActionMW = (store) => (next) => (action) => {
+//   console.log('Hit middleware');
+//   if (action.type === 'products/BOXING_DAY_OFFERS') return;
+//   else return next(action);
+// };
 
-export const loggerMiddleware = (storeAPI) => (next) => (action) => {
-  console.log('dispatching', action);
-  let result = next(action);
-  console.log('next state', storeAPI.getState());
-  return result;
+// export const loggerMiddleware = (storeAPI) => (next) => (action) => {
+//   console.log('dispatching', action);
+//   let result = next(action);
+//   console.log('next state', storeAPI.getState());
+//   return result;
+// };
+
+export const productAPIMW = (store) => (next) => (action) => {
+  if (action.type === 'products/LOAD_PRODUCTS_INIT') {
+    axios.get('https://fakestoreapi.com/products').then((res) => {
+      store.dispatch({
+        type: 'products/LOAD_PRODUCTS',
+        payload: res.data,
+      });
+    });
+  }
+  return next(action);
 };
