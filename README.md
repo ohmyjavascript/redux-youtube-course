@@ -58,3 +58,4 @@ Actions dispatched twice within useEffect
 - we already saw shallowEqual
 - Memoization is a kind of caching - specifically, saving the results of an expensive calculation, and reusing those results if we see the same inputs later.
 - Memoization with reselect library
+- State normalization - store items in a way which allows finding them directly by ID

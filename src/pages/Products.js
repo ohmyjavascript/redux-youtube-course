@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchProducts } from '../store/products/actions';
 import {
+  selectHasProductCount,
   selectProductIds,
+  selectProductIsLoaded,
   selectProductIsLoading,
 } from '../store/products/selectors';
 import Spinner from '../components/Spinner';
@@ -12,14 +14,16 @@ import Spinner from '../components/Spinner';
 const Products = () => {
   const productIds = useSelector(selectProductIds);
   const isLoading = useSelector(selectProductIsLoading);
+  const hasProducts = useSelector(selectHasProductCount);
+  const isLoaded = useSelector(selectProductIsLoaded);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (productIds.length === 0) {
+    if (!hasProducts && !isLoaded) {
       dispatch(fetchProducts);
     }
-  }, [dispatch, productIds]);
+  }, [dispatch, hasProducts, isLoaded]);
 
   if (isLoading) {
     return <Spinner />;
