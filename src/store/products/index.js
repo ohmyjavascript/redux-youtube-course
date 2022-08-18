@@ -1,3 +1,10 @@
+import {
+  ADD_FAVORITE,
+  LOAD_PRODUCTS,
+  LOAD_PRODUCTS_INIT,
+  SAVE_PRODUCT,
+} from './actions';
+
 const INIT_STATE = {
   products: [],
   isLoaded: false,
@@ -6,12 +13,12 @@ const INIT_STATE = {
 
 function productsReducer(state = INIT_STATE, action) {
   switch (action.type) {
-    case 'products/LOAD_PRODUCTS_INIT':
+    case LOAD_PRODUCTS_INIT:
       return {
         ...state,
         isLoading: true,
       };
-    case 'products/LOAD_PRODUCTS':
+    case LOAD_PRODUCTS:
       const sliced = action.payload.slice(0, 8);
       return {
         ...state,
@@ -20,7 +27,7 @@ function productsReducer(state = INIT_STATE, action) {
         isLoading: false,
       };
 
-    case 'favorites/ADD_FAVORITE':
+    case ADD_FAVORITE:
       return {
         ...state,
         products: state.products.map((prodItem) => {
@@ -34,7 +41,7 @@ function productsReducer(state = INIT_STATE, action) {
         }),
       };
 
-    case 'products/ADD_PRODUCT':
+    case SAVE_PRODUCT:
       return {
         ...state,
         products: [...state.products, action.payload],
