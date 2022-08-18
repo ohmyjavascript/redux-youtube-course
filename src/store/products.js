@@ -1,6 +1,16 @@
 import { v4 as uuidv4 } from 'uuid';
+import axios from 'axios';
 
 const INIT_STATE = [];
+
+// Thunk function
+export async function fetchProducts(dispatch, getState) {
+  const response = await axios.get('https://fakestoreapi.com/products');
+  dispatch({
+    type: 'products/LOAD_PRODUCTS',
+    payload: response.data,
+  });
+}
 
 function productsReducer(state = INIT_STATE, action) {
   switch (action.type) {
