@@ -14,11 +14,6 @@ const ProductItem = ({ id }) => {
   );
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    // HERE IS THE PROBLEM
-    console.log('Render product Item ');
-  });
-
   const onFavorite = () => {
     dispatch({
       type: 'favorites/ADD_FAVORITE',
@@ -28,7 +23,7 @@ const ProductItem = ({ id }) => {
 
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      {product.text}
+      {product.title.slice(0, 50)}
       <div>
         <button
           onClick={() => onFavorite(product.id)}

@@ -4,6 +4,7 @@ import Products from './pages/Products';
 import Favorites from './pages/Favorites';
 import Cart from './pages/Cart';
 import AddNewProduct from './pages/AddNewProduct';
+import React from 'react';
 
 function App() {
   return (

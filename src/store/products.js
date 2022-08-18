@@ -5,7 +5,8 @@ const INIT_STATE = [];
 function productsReducer(state = INIT_STATE, action) {
   switch (action.type) {
     case 'products/LOAD_PRODUCTS':
-      return state.length !== 0 ? state : [];
+      const sliced = action.payload.slice(0, 8);
+      return [...sliced];
 
     case 'favorites/ADD_FAVORITE':
       return state.map((prodItem) => {
