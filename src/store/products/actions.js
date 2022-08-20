@@ -1,23 +1,21 @@
 import axios from 'axios';
-import { loadAllProducts, loadProductsInit, saveProduct } from './index';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const fetchProducts = () => async (dispatch) => {
-  dispatch(loadProductsInit());
-  const response = await axios.get('https://fakestoreapi.com/products');
-  dispatch(loadAllProducts(response.data));
-};
+export const fetchProducts = createAsyncThunk(
+  'products/FetchProducts',
+  async () => {
+    const response = await axios.get('https://fakestoreapi.com/products');
+    return response.data;
+  }
+);
 
-export const saveProductToDB = (product) => async (dispatch) => {
-  product.rating = {
-    rate: 0,
-    count: 0,
-  };
-  const post = JSON.stringify(product);
-  const response = await axios.post('https://fakestoreapi.com/products', post);
-  dispatch(
-    saveProduct({
-      ...response.data.id,
-      product,
-    })
-  );
-};
+export const saveProductToDB = createAsyncThunk(
+  'products/saveProduct',
+  async (post) => {
+    const response = await axios.post(
+      'https://fakestoreapi.com/products',
+      post
+    );
+    return { ...post, id: response.data.id };
+  }
+);

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { fetchProducts, saveProductToDB } from './actions';
 
 const initialState = {
   entities: {},
@@ -9,29 +10,32 @@ const initialState = {
 const productSlice = createSlice({
   name: 'products',
   initialState,
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchProducts.pending, (state, action) => {
+        state.isLoading = true;
+      })
+      .addCase(fetchProducts.fulfilled, (state, action) => {
+        const sliced = action.payload.slice(0, 8);
+        const entities = sliced.reduce((acc, item) => {
+          return {
+            ...acc,
+            [item.id]: item,
+          };
+        }, {});
+        state.entities = entities;
+        state.isLoaded = true;
+        state.isLoading = false;
+      })
+      .addCase(saveProductToDB.fulfilled, (state, action) => {
+        state.entities[action.payload.id] = action.payload;
+      });
+  },
   reducers: {
-    loadProductsInit(state, action) {
-      state.isLoading = true;
-    },
-    loadAllProducts(state, action) {
-      const sliced = action.payload.slice(0, 8);
-      const entities = sliced.reduce((acc, item) => {
-        return {
-          ...acc,
-          [item.id]: item,
-        };
-      }, {});
-      state.entities = entities;
-      state.isLoaded = true;
-      state.isLoading = false;
-    },
     addFavorite(state, action) {
       const changedEntity = state.entities[action.payload];
       changedEntity.isFavorite = !changedEntity.isFavorite;
       state.entities[action.payload] = changedEntity;
-    },
-    saveProduct(state, action) {
-      state.entities[action.payload.id] = action.payload;
     },
   },
 });
