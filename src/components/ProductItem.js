@@ -12,7 +12,6 @@ const ProductItem = ({ id }) => {
 
   const onFavorite = () => {
     dispatch(addFavorite(id));
-    dispatch(addFavoriteItem(id));
   };
 
   return (

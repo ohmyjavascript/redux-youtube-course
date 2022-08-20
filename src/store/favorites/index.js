@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { addFavorite } from '../products';
 
 const initialState = [];
 
 const favoriteSlice = createSlice({
   name: 'favorites',
   initialState,
-  reducers: {
-    addFavoriteItem(state, action) {
+  extraReducers: (builder) => {
+    builder.addCase(addFavorite, (state, action) => {
       if (state.length === 0) {
         return [action.payload];
       }
@@ -15,10 +16,9 @@ const favoriteSlice = createSlice({
         return state.filter((item) => item !== action.payload);
       }
       return state.concat(action.payload);
-    },
+    });
   },
+  reducers: {},
 });
-
-export const { addFavoriteItem } = favoriteSlice.actions;
 
 export default favoriteSlice.reducer;
