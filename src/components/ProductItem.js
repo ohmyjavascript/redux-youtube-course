@@ -2,6 +2,8 @@ import React from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
+import { addFavoriteItem } from '../store/favorites';
+import { addFavorite } from '../store/products';
 import { selectProductById } from '../store/products/selectors';
 
 const ProductItem = ({ id }) => {
@@ -9,10 +11,8 @@ const ProductItem = ({ id }) => {
   const dispatch = useDispatch();
 
   const onFavorite = () => {
-    dispatch({
-      type: 'favorites/ADD_FAVORITE',
-      payload: id,
-    });
+    dispatch(addFavorite(id));
+    dispatch(addFavoriteItem(id));
   };
 
   return (

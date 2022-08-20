@@ -60,3 +60,23 @@ Actions dispatched twice within useEffect
 - Memoization with reselect library
 - State normalization - store items in a way which allows finding them directly by ID
 - we can write thunk functions that return a promise, and wait on that promise in our components.
+
+### Pain points:
+
+- Patterns are good & they exist for specific reasons, but is verbose & writing them by hand can be difficult. Setting up store is tough at first too. 
+
+### RTK 
+- recommended toolset now for redux way of writing 
+- Best practices are included
+- tasks are simplified
+- prevents common mistakes
+- easy & enjoyable to write redux apps.
+
+### ConfigureStore 
+
+- thunk is baked in
+- store is configured with the root reducer when we use configureStore call
+- more middlewares added automatically to check common mistakes like state mutation
+- dev tools are configured
+- npm uninstall redux redux-thunk reselect
+- 

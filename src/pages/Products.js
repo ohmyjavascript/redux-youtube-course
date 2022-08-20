@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import ProductItem from '../components/ProductItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchProducts } from '../store/products/actions';
 import {
   selectHasProductCount,
   selectProductIds,
@@ -10,6 +9,7 @@ import {
   selectProductIsLoading,
 } from '../store/products/selectors';
 import Spinner from '../components/Spinner';
+import { fetchProducts } from '../store/products/actions';
 
 const Products = () => {
   const productIds = useSelector(selectProductIds);
@@ -21,7 +21,7 @@ const Products = () => {
 
   useEffect(() => {
     if (!hasProducts && !isLoaded) {
-      dispatch(fetchProducts);
+      dispatch(fetchProducts());
     }
   }, [dispatch, hasProducts, isLoaded]);
 

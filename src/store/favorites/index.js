@@ -1,22 +1,24 @@
-const INIT_STATE = [];
+import { createSlice } from '@reduxjs/toolkit';
 
-function favoritesReducer(state = INIT_STATE, action) {
-  switch (action.type) {
-    case 'favorites/ADD_FAVORITE':
-      // if empty state, just add
+const initialState = [];
+
+const favoriteSlice = createSlice({
+  name: 'favorites',
+  initialState,
+  reducers: {
+    addFavoriteItem(state, action) {
       if (state.length === 0) {
         return [action.payload];
       }
-      // if it already exist, then toggle it. Else add it
       const isExisting = !!state.find((item) => item === action.payload);
       if (isExisting) {
         return state.filter((item) => item !== action.payload);
       }
       return state.concat(action.payload);
+    },
+  },
+});
 
-    default:
-      return state;
-  }
-}
+export const { addFavoriteItem } = favoriteSlice.actions;
 
-export default favoritesReducer;
+export default favoriteSlice.reducer;
