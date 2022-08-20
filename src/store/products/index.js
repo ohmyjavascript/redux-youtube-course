@@ -1,11 +1,12 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { fetchProducts, saveProductToDB } from './actions';
 
-const initialState = {
-  entities: {},
+const productsAdapter = createEntityAdapter();
+
+const initialState = productsAdapter.getInitialState({
   isLoaded: false,
   isLoading: false,
-};
+});
 
 const productSlice = createSlice({
   name: 'products',
@@ -17,18 +18,12 @@ const productSlice = createSlice({
       })
       .addCase(fetchProducts.fulfilled, (state, action) => {
         const sliced = action.payload.slice(0, 8);
-        const entities = sliced.reduce((acc, item) => {
-          return {
-            ...acc,
-            [item.id]: item,
-          };
-        }, {});
-        state.entities = entities;
+        productsAdapter.setAll(state, sliced);
         state.isLoaded = true;
         state.isLoading = false;
       })
       .addCase(saveProductToDB.fulfilled, (state, action) => {
-        state.entities[action.payload.id] = action.payload;
+        productsAdapter.addOne(state, action.payload);
       });
   },
   reducers: {
