@@ -2,9 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectFavoriteItemsCount } from '../store/favorites/selector';
+import { selectCartLength } from '../store/cart';
 
 const Header = () => {
   const favoritedItems = useSelector(selectFavoriteItemsCount);
+  const cartItems = useSelector(selectCartLength);
+
   return (
     <div className="navbar navbar-dark bg-primary">
       <div className="navbar-header pull-left">
@@ -20,7 +23,7 @@ const Header = () => {
           Favorites ({favoritedItems})
         </Link>
         <Link to="/cart" className="btn btn-default text-white navbar-btn">
-          Cart
+          Cart ({cartItems})
         </Link>
         <Link to="/new" className="btn btn-default text-white navbar-btn">
           New Product

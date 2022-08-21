@@ -2,6 +2,7 @@ import React from 'react';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
 import { useSelector, useDispatch } from 'react-redux';
+import { addToCart } from '../store/cart';
 import { addFavoriteItem } from '../store/favorites';
 import { addFavorite } from '../store/products';
 import { selectProductById } from '../store/products/selectors';
@@ -12,6 +13,10 @@ const ProductItem = ({ id }) => {
 
   const onFavorite = () => {
     dispatch(addFavorite(id));
+  };
+
+  const onCartAdd = () => {
+    dispatch(addToCart(product.id));
   };
 
   return (
@@ -28,7 +33,10 @@ const ProductItem = ({ id }) => {
             <AiOutlineHeart size={24} />
           )}
         </button>
-        <button className="btn btn-secondary">
+        <button
+          onClick={() => onCartAdd(product.id)}
+          className="btn btn-secondary"
+        >
           <IoIosAdd size={24} />
         </button>
       </div>
