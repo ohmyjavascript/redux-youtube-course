@@ -1,49 +1,24 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import ProductItem from '../components/ProductItem';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import {
-  selectHasProductCount,
-  selectProductIds,
-  selectProductIsLoaded,
-  selectProductIsLoading,
-} from '../store/products/selectors';
-import Spinner from '../components/Spinner';
-import { fetchProducts } from '../store/products/actions';
 
 const Products = () => {
-  const productIds = useSelector(selectProductIds);
-  const isLoading = useSelector(selectProductIsLoading);
-  const hasProducts = useSelector(selectHasProductCount);
-  const isLoaded = useSelector(selectProductIsLoaded);
-
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (!hasProducts && !isLoaded) {
-      dispatch(fetchProducts());
-    }
-  }, [dispatch, hasProducts, isLoaded]);
-
-  if (isLoading) {
-    return <Spinner />;
-  }
-
-  if (productIds.length === 0) {
-    return (
-      <div className="alert alert-dismissible alert-info">
-        <strong>Alert! </strong> Please start adding products
-        <Link to="/new" className="ml-2 alert-link">
-          from here
-        </Link>
-      </div>
-    );
-  }
+  const [products] = React.useState([]);
+  const addFavorite = (id) => {
+    console.log('Adding product to favorite', id);
+  };
+  const addToCart = (id) => {
+    console.log('Adding product to cart', id);
+  };
   return (
     <div>
       <ul className="list-group">
-        {productIds.map((prodId) => (
-          <ProductItem key={prodId} id={prodId} />
+        {products.map((prod) => (
+          <ProductItem
+            key={prod.id}
+            item={prod}
+            onFavorite={addFavorite}
+            onCartAdd={addToCart}
+          />
         ))}
       </ul>
     </div>

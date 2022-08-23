@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { saveProductToDB } from '../store/products/actions';
 
 const AddNewProduct = () => {
   const [title, setTitle] = useState('');
@@ -9,10 +6,7 @@ const AddNewProduct = () => {
   const [image, setImage] = useState('');
   const [category, setCategory] = useState('Mobile');
   const [price, setPrice] = useState(0);
-  const [status, setStatus] = useState('');
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const [status] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,10 +17,7 @@ const AddNewProduct = () => {
       category,
       price,
     };
-    setStatus('saving');
-    await dispatch(saveProductToDB(product));
-    setStatus('');
-    navigate('/');
+    console.log(product);
   };
 
   return (

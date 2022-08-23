@@ -1,40 +1,20 @@
 import React from 'react';
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
+import { AiOutlineHeart } from 'react-icons/ai';
 import { IoIosAdd } from 'react-icons/io';
-import { useSelector, useDispatch } from 'react-redux';
-import { addToCart } from '../store/cart';
-import { addFavoriteItem } from '../store/favorites';
-import { addFavorite } from '../store/products';
-import { selectProductById } from '../store/products/selectors';
 
-const ProductItem = ({ id }) => {
-  const product = useSelector(selectProductById(id));
-  const dispatch = useDispatch();
-
-  const onFavorite = () => {
-    dispatch(addFavorite(id));
-  };
-
-  const onCartAdd = () => {
-    dispatch(addToCart(product.id));
-  };
-
+const ProductItem = ({ item, onFavorite, onCartAdd }) => {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      {product.title.slice(0, 50)}
+      {item.text}
       <div>
         <button
-          onClick={() => onFavorite(product.id)}
+          onClick={() => onFavorite(item.id)}
           className="btn btn-secondary"
         >
-          {product.isFavorite ? (
-            <AiFillHeart size={24} />
-          ) : (
-            <AiOutlineHeart size={24} />
-          )}
+          <AiOutlineHeart size={24} />
         </button>
         <button
-          onClick={() => onCartAdd(product.id)}
+          onClick={() => onCartAdd(item.id)}
           className="btn btn-secondary"
         >
           <IoIosAdd size={24} />

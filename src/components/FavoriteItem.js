@@ -1,15 +1,15 @@
 import React from 'react';
 
-const FavoriteItem = ({ item }) => {
+const FavoriteItem = () => {
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
-      {item.title.slice(0, 25)}
+      Item
       <div>
         <span className="badge rounded-pill bg-primary text-white mr-2 px-3 py-2">
-          {item.category}
+          Electronics
         </span>
         <span className="badge rounded-pill bg-primary text-white px-3 py-2">
-          {item.price}
+          1200
         </span>
       </div>
     </li>
